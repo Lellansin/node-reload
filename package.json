@@ -1,0 +1,25 @@
+{
+  "name": "auto-reload",
+  "version": "0.0.0",
+  "description": "To clear require cache, and auto reload module",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "http://github.com/Lellansin/node-reload"
+  },
+  "keywords": [
+    "reload"
+  ],
+  "author": "Lellansin",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Lellansin/node-reload/issues"
+  },
+  "homepage": "https://github.com/Lellansin/node-reload",
+  "dependencies": {
+    "node-schedule": "~0.1.13"
+  }
+}
