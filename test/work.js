@@ -18,3 +18,12 @@ var random = function(min, max) {
     var rand = Math.random();
     return (min + Math.round(rand * range));
 };
+
+/*
+todo 
+
+var include = require('../');
+var data = include('./data');
+data.update();
+
+*/
