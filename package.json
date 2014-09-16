@@ -4,7 +4,7 @@
   "description": "To clear require cache, and auto reload module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"If you see a data change in every 5 secs, it's okay\" && node ./test/work.js -d"
   },
   "repository": {
     "type": "git",
