@@ -21,5 +21,8 @@
   "homepage": "https://github.com/Lellansin/node-reload",
   "dependencies": {
     "node-schedule": "~0.1.13"
+  },
+  "directories": {
+    "test": "test"
   }
 }
