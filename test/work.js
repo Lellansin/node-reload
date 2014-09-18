@@ -1,14 +1,15 @@
 var fs = require('fs');
 var reload = require('../');
+var data = reload('./data');
 
 // print data from module every sec
 setInterval(function() {
-    var data = reload('./data');
     console.log(data.name);
 }, 1000);
 
 // update file every 5 secs
 setInterval(function() {
+	console.log('update!')
     var data = '{ "name":"' + random(100000, 999999) + '" }';
     fs.writeFile('./data.json', data);
 }, 5000);
