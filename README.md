@@ -6,7 +6,7 @@ For node.js to reload the module ,which was to be load by `require`, automaticly
 example:
 
     var fs = require('fs');
-    var reload = require('../');
+    var reload = require('auto-reload');
     var data = reload('./data');
     
     // print data from module every sec
