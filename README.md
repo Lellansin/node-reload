@@ -4,7 +4,7 @@ node-reload
 For node.js to reload the module ,which was to be load by `require`, automaticly.
 
 example:
-<code>
+
     var fs = require('fs');
     var reload = require('../');
     var data = reload('./data');
@@ -26,4 +26,3 @@ example:
         var rand = Math.random();
         return (min + Math.round(rand * range));
     };
-</code>
