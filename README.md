@@ -3,7 +3,7 @@ node-reload
 
 For node.js to reload the module ,which was to be load by `require`, automaticly.
 
-**realod .js file not support now** it's only work for .json now.
+**realod .js file havent support** it's only work for .json now.
 
 Install
 
