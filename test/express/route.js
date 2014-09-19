@@ -1,0 +1,1 @@
+module.exports = function(req, res) {res.send("hello 0.04833810613490641");}
