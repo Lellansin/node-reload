@@ -3,26 +3,47 @@ node-reload
 
 For node.js to reload the module ,which was to be load by `require`, automaticly.
 
-example:
+Install
+
+    npm install auto-reload
+
+example
+------------
+
+data.json
+
+    { "name" : "Alan" }
+
+test.js
 
     var fs = require('fs');
     var reload = require('auto-reload');
-    var data = reload('./data');
+    var data = reload('./data', 3000); // reload every 3 secs
     
-    // print data from module every sec
+    // print data every sec
     setInterval(function() {
-        console.log(data.name);
+        console.log(data);
     }, 1000);
     
-    // update file every 5 secs
+    // update data.json every 3 secs
     setInterval(function() {
-    	console.log('update!')
-        var data = '{ "name":"' + random(100000, 999999) + '" }';
+        var data = '{ "name":"' + Math.random() + '" }';
         fs.writeFile('./data.json', data);
-    }, 5000);
-    
-    var random = function(min, max) {
-        var range = max - min;
-        var rand = Math.random();
-        return (min + Math.round(rand * range));
-    };
+    }, 3000);
+
+Result:
+
+    { name: 'Alan' }
+    { name: 'Alan' }
+    { name: 'Alan' }
+    { name: 'Alan' }
+    { name: 'Alan' }
+    { name: '0.8272748321760446' }
+    { name: '0.8272748321760446' }
+    { name: '0.8272748321760446' }
+    { name: '0.07935990858823061' }
+    { name: '0.07935990858823061' }
+    { name: '0.07935990858823061' }
+    { name: '0.20851597073487937' }
+    { name: '0.20851597073487937' }
+    { name: '0.20851597073487937' }
