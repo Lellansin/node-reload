@@ -1,6 +1,6 @@
-var reload = require('./exports_yes')
+var data = require('./exports').data;
 
 // print data from module every sec
 setInterval(function() {
-    console.log(reload().name);
+    console.log(data);
 }, 1000);

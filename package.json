@@ -4,7 +4,7 @@
   "description": "To clear require cache, and auto reload module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"If you see a data change in every 5 secs, it's okay\" && node ./test/work.js -d"
+    "test": "echo \"If you see a data change in every 5 secs, it's okay\" && cd ./test && node ./test.js -d"
   },
   "repository": {
     "type": "git",
@@ -19,9 +19,7 @@
     "url": "https://github.com/Lellansin/node-reload/issues"
   },
   "homepage": "https://github.com/Lellansin/node-reload",
-  "dependencies": {
-    "node-schedule": "~0.1.13"
-  },
+  "dependencies": {},
   "directories": {
     "test": "test"
   }
