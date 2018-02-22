@@ -1,14 +1,18 @@
-var fs = require('fs');
-var reload = require('../');
-var data = reload('./data');
+const reload = require('../');
+const data = reload('./data', 5000);
+const heapdump = require('heapdump');
+
+const save = () => {
+  gc();
+  heapdump.writeSnapshot('./' + Date.now() + '.heapsnapshot');
+};
 
 // print data from module every sec
 setInterval(function() {
-  console.log(data.name);
+  console.log(new Date, data.name);
 }, 1000);
 
-// update file every 3 secs
-setInterval(function() {
-  var data = '{ "name":"' + Math.random() + '" }';
-  fs.writeFile('./data.json', data);
-}, 3000);
+// setInterval(() => {
+//   save();
+// }, 1000 * 30);
+
