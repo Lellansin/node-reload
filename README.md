@@ -87,5 +87,6 @@ setInterval(function() {
 - [x] auto reload json file
 - [x] auto reload js file
 - [x] fix memory leak
+- [ ] provide more options (include logger etc.)
 - [ ] rewrite with promise (include improve exception catch)
 - [ ] add tests with ava
