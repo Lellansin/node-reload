@@ -1,51 +1,84 @@
-node-reload
-===========
+# node-reload
 
 For node.js to reload the module ,which was to be load by `require`, automaticly.
 
-**realod .js file havent support** it's only work for .json now.
+## Install
 
-Install
+```
+npm install auto-reload
+```
 
-    npm install auto-reload
+## Example
 
-example
-------------
+### Reload Json
 
-data.json
+`test/data/json.json`
 
-    { "name" : "Alan" }
+```json
+{ "name" : "Alan" }
+```
 
-test.js
+`test/json.js`
+```js
+const fs = require('fs');
+const reload = require('auto-reload');
+const data = reload('./data/json'); // reload after file changed
 
-    var fs = require('fs');
-    var reload = require('auto-reload');
-    var data = reload('./data', 3000); // reload every 3 secs
-    
-    // print data every sec
-    setInterval(function() {
-        console.log(data);
-    }, 1000);
-    
-    // update data.json every 3 secs
-    setInterval(function() {
-        var data = '{ "name":"' + Math.random() + '" }';
-        fs.writeFile('./data.json', data);
-    }, 3000);
+// print data every sec
+setInterval(() => {
+  console.log(data);
+}, 1000);
+
+// update data.json every 3 secs
+setInterval(() => {
+  const text = '{ "rand":' + Math.random() + ' }';
+  fs.writeFileSync('./data/json.json', text);
+}, 3000);
+```
 
 Result:
 
-    { name: 'Alan' }
-    { name: 'Alan' }
-    { name: 'Alan' }
-    { name: 'Alan' }
-    { name: 'Alan' }
-    { name: '0.8272748321760446' }
-    { name: '0.8272748321760446' }
-    { name: '0.8272748321760446' }
-    { name: '0.07935990858823061' }
-    { name: '0.07935990858823061' }
-    { name: '0.07935990858823061' }
-    { name: '0.20851597073487937' }
-    { name: '0.20851597073487937' }
-    { name: '0.20851597073487937' }
+```js
+{ rand: 0 }
+{ rand: 0 }
+{ rand: 0 }
+{ rand: 0 }
+{ rand: 0.8345247761456729 }
+{ rand: 0.8345247761456729 }
+{ rand: 0.8345247761456729 }
+{ rand: 0.8345247761456729 }
+{ rand: 0.8345247761456729 }
+{ rand: 0.3629913581616717 }
+{ rand: 0.3629913581616717 }
+```
+
+### Reload Js file
+
+**Realod function haven't support**
+
+`test/data/code.js`
+```js
+{ "name" : "Alan" }
+```
+
+`test/code.js`
+```js
+const reload = require('../');
+const data = reload('./data/code');
+
+// print data from module every sec
+setInterval(function() {
+  console.log(new Date, data.time);
+}, 1000);
+
+// If you update the `time` in test/data/code.js
+// the output will change immediately
+```
+
+## Aims
+
+- [x] auto reload json file
+- [x] auto reload js file
+- [x] fix memory leak
+- [ ] rewrite with promise (include improve exception catch)
+- [ ] add tests with ava
