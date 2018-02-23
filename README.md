@@ -26,30 +26,29 @@ const data = reload('./data/json'); // reload after file changed
 
 // print data every sec
 setInterval(() => {
-  console.log(data);
+  console.log(data.rand, data.list[0].name);
 }, 1000);
 
-// update data.json every 3 secs
-setInterval(() => {
-  const text = '{ "rand":' + Math.random() + ' }';
-  fs.writeFileSync('./data/json.json', text);
-}, 3000);
+// update data.json after startup
+setTimeout(() => {
+  const text = `{
+  "rand": ${Math.random()},
+  "list": [{
+    "name": "Test"
+  }]
+}`;
+  fs.writeFileSync(path.join(__dirname, './data/json.json'), text);
+}, 0);
 ```
 
 Result:
 
 ```js
-{ rand: 0 }
-{ rand: 0 }
-{ rand: 0 }
-{ rand: 0 }
-{ rand: 0.8345247761456729 }
-{ rand: 0.8345247761456729 }
-{ rand: 0.8345247761456729 }
-{ rand: 0.8345247761456729 }
-{ rand: 0.8345247761456729 }
-{ rand: 0.3629913581616717 }
-{ rand: 0.3629913581616717 }
+0 'Alan'
+0 'Alan'
+0 'Alan'
+0 'Alan'
+0.41179045320583496 'Test'
 ```
 
 ### Reload Js file
