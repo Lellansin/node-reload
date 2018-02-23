@@ -1,5 +1,5 @@
 const reload = require('../');
-const data = reload('./data.js');
+const data = reload('./data/code');
 
 // print data from module every sec
 setInterval(function() {
