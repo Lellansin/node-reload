@@ -1,19 +1,10 @@
-const fs = require('fs');
-const path = require('path');
 const reload = require('../');
-
-const INTERVAL = 3000;
-const data = reload('./data.js', INTERVAL);
+const data = reload('./data.js');
 
 // print data from module every sec
 setInterval(function() {
   console.log(new Date, data.time);
 }, 1000);
 
-setInterval(() => {
-  fs.writeFileSync(path.join(__dirname, './data.js'), `
-module.exports = {
-  name: '${Date.now()}'
-};
-  `);
-}, INTERVAL);
+// If you update the `time` in data.js
+// the output will change immediately
