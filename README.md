@@ -58,7 +58,15 @@ Result:
 
 `test/data/code.js`
 ```js
-{ "name" : "Alan" }
+module.exports = {
+  num: 0,
+  str: 'string',
+  obj: {
+    name: 'Alan',
+    age: 18
+  },
+  list: [1,3,5,7,9]
+};
 ```
 
 `test/code.js`
@@ -68,7 +76,7 @@ const data = reload('./data/code');
 
 // print data from module every sec
 setInterval(function() {
-  console.log(new Date, data.time);
+  console.log(new Date, data);
 }, 1000);
 
 // If you update the `time` in test/data/code.js
