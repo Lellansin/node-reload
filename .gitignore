@@ -18,4 +18,5 @@ coverage.html
 .idea/*
 *.heapsnapshot
 *.json
+test/test.js
 

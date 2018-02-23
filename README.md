@@ -15,7 +15,12 @@ npm install auto-reload
 `test/data/json.json`
 
 ```json
-{ "name" : "Alan" }
+{
+  "rand": 0,
+  "list": [{
+    "name": "Alan"
+  }]
+}
 ```
 
 `test/json.js`
