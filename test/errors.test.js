@@ -39,14 +39,17 @@ module.exports = [
   },
   {
     name: 'errors: identical consecutive failures are logged only once',
-    timeout: 25000,
+    timeout: 30000,
     fn: function(done) {
       helpers.write(dir, 'dup.json', '{"v":1}');
       var data = reload('./.tmp/err/dup', TICK);
 
       helpers.captureConsole('error', function(calls, next) {
-        helpers.write(dir, 'dup.json', '{"v":'); // stays broken
-        setTimeout(next, TICK * 3 + 400);        // let at least 3 checks pass
+        helpers.write(dir, 'dup.json', '{"v":');            // broken, size 6
+        setTimeout(function() {
+          helpers.write(dir, 'dup.json', '{"v":    ');      // still broken, same parse error, new size
+          setTimeout(next, TICK * 2 + 400);                 // let at least 2 more checks pass
+        }, TICK + 400);
       }, function(err, calls) {
         if (err) return done(err);
         try {

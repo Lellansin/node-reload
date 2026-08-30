@@ -13,3 +13,5 @@ coverage.html
 # test artifacts (never ignore package.json / other source json)
 /data.json
 test/.tmp/
+coverage/
+coverage-badge.svg

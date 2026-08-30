@@ -36,3 +36,41 @@ jobs:
 
       - name: Run tests
         run: npm test
+
+  coverage:
+    runs-on: ubuntu-latest
+    name: Coverage
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Run tests with coverage (100% gate)
+        run: npm run coverage
+
+      - name: Generate coverage badge
+        run: node scripts/update-coverage-badge.js
+
+      - name: Publish badge to the badges branch
+        if: github.ref == 'refs/heads/master'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          mv coverage-badge.svg /tmp/coverage-badge.svg
+          git fetch origin badges || true
+          if git rev-parse --verify origin/badges >/dev/null 2>&1; then
+            git switch badges
+          else
+            git switch --orphan badges
+          fi
+          mv -f /tmp/coverage-badge.svg coverage-badge.svg
+          git add coverage-badge.svg
+          git commit -m "chore: update coverage badge" || echo "badge unchanged"
+          git push origin badges --force

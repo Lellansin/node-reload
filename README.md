@@ -1,6 +1,7 @@
 # node-reload
 
 [![CI](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml/badge.svg)](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml)
+[![coverage](https://raw.githubusercontent.com/Lellansin/node-reload/badges/coverage-badge.svg)](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml)
 [![npm](https://img.shields.io/npm/v/auto-reload.svg)](https://www.npmjs.com/package/auto-reload)
 ![node](https://img.shields.io/badge/node-%3E%3D4-blue.svg)
 [![license](https://img.shields.io/github/license/Lellansin/node-reload.svg)](./LICENSE)
@@ -154,6 +155,15 @@ Run the test suite (no dependencies to install):
 npm test
 ```
 
-The files under `test/` (other than `test/run.js` and `*.test.js`) are manual
+Run the tests with coverage — c8 enforces 100% coverage (statements,
+branches, functions, lines) over `lib/` + `index.js`. CI runs this on every
+push and publishes the badge to the `badges` branch:
+
+```
+npm run coverage
+```
+
+The files under `test/` (other than `test/run.js`, `test/helpers.js` and
+`*.test.js`) are manual
 demos — start one, edit the watched file, and watch it update. The express demo
 needs `npm i express` first.

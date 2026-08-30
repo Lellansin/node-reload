@@ -9,7 +9,8 @@ var suites = [
   './renew.test.js',
   './require_resolution.test.js',
   './errors.test.js',
-  './misc.test.js'
+  './misc.test.js',
+  './edge.test.js'
 ];
 
 var passed = 0;
@@ -59,6 +60,14 @@ function runSuite(index) {
 function finish() {
   console.log('');
   console.log('passed: ' + passed + ', failed: ' + failed);
-  helpers.rmdirRecursive(helpers.TMP_ROOT);
-  process.exit(failed ? 1 : 0);
+  if (failed) {
+    console.log('\nfailures:');
+    failures.forEach(function(f) { console.log(f); });
+  }
+  // wait briefly so coverage dumps of recently exited child processes
+  // land before the runner (and the c8 report) is done
+  setTimeout(function() {
+    helpers.rmdirRecursive(helpers.TMP_ROOT);
+    process.exit(failed ? 1 : 0);
+  }, 500);
 }

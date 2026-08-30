@@ -4,7 +4,8 @@
   "description": "To clear require cache, and auto reload module",
   "main": "index.js",
   "scripts": {
-    "test": "node test/run.js"
+    "test": "node test/run.js",
+    "coverage": "c8 --include 'lib/**/*.js' --include 'index.js' --reporter=text --reporter=text-summary --reporter=json-summary --reports-dir coverage --check-coverage --lines 100 --statements 100 --functions 100 --branches 100 npm test"
   },
   "repository": {
     "type": "git",
@@ -23,11 +24,13 @@
     "url": "https://github.com/Lellansin/node-reload/issues"
   },
   "homepage": "https://github.com/Lellansin/node-reload",
-  "dependencies": {},
   "engines": {
     "node": ">= 4.0.0"
   },
   "directories": {
     "test": "test"
+  },
+  "devDependencies": {
+    "c8": "^12.0.0"
   }
 }
