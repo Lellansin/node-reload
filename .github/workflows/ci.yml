@@ -40,6 +40,7 @@ jobs:
   coverage:
     runs-on: ubuntu-latest
     name: Coverage
+    timeout-minutes: 10
     permissions:
       contents: write
     steps:
@@ -50,7 +51,7 @@ jobs:
           node-version: 24
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci --no-audit --no-fund
 
       - name: Run tests with coverage (100% gate)
         run: npm run coverage
