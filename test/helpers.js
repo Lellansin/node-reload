@@ -39,7 +39,15 @@ function rmdirRecursive(p) {
   try { fs.rmdirSync(p); } catch (e) { /* already gone */ }
 }
 
+function busyWait(ms) {
+  var end = Date.now() + ms;
+  while (Date.now() < end) { /* spin */ }
+}
+
 function write(dir, name, content) {
+  // old Node StatWatchers only compare millisecond mtime, so make sure
+  // consecutive writes always land on different mtime ticks
+  busyWait(5);
   fs.writeFileSync(Path.join(dir, name), content);
 }
 
