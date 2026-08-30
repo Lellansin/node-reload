@@ -1,6 +1,9 @@
 # node-reload
 
 [![CI](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml/badge.svg)](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml)
+[![npm](https://img.shields.io/npm/v/auto-reload.svg)](https://www.npmjs.com/package/auto-reload)
+![node](https://img.shields.io/badge/node-%3E%3D4-blue.svg)
+[![license](https://img.shields.io/github/license/Lellansin/node-reload.svg)](./LICENSE)
 
 For node.js to reload the module, which was loaded by `require`, automatically when its file changes.
 
