@@ -1,10 +1,13 @@
 var fs = require('fs');
+var path = require('path');
 var reload = require('../../');
 
-exports.data = reload('../data');
+exports.data = reload('../data.json');
 
 // update file every 3 secs
 setInterval(function() {
   var data = '{ "name":"' + Math.random() + '" }';
-  fs.writeFile('../data.json', data);
+  fs.writeFile(path.join(__dirname, '..', 'data.json'), data, function(err) {
+    if (err) console.error(err);
+  });
 }, 3000);

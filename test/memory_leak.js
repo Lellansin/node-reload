@@ -1,18 +1,10 @@
-const reload = require('../');
-const data = reload('./data', 5000);
-const heapdump = require('heapdump');
+// Manual demo for observing memory behaviour while reloading a large json.
+// Run: node --expose-gc test/memory_leak.js   (heap snapshots via your profiler)
+var reload = require('../');
+var data = reload('./data.json', 5000);
 
-const save = () => {
-  gc();
-  heapdump.writeSnapshot('./' + Date.now() + '.heapsnapshot');
-};
-
-// print data from module every sec
+// print data + memory every sec
 setInterval(function() {
-  console.log(new Date, data.name);
+  var mem = process.memoryUsage();
+  console.log(new Date, data.name, 'rss=' + Math.round(mem.rss / 1048576) + 'MB');
 }, 1000);
-
-// setInterval(() => {
-//   save();
-// }, 1000 * 30);
-

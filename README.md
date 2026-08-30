@@ -1,6 +1,10 @@
 # node-reload
 
-For node.js to reload the module ,which was to be load by `require`, automaticly.
+[![CI](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml/badge.svg)](https://github.com/Lellansin/node-reload/actions/workflows/ci.yml)
+
+For node.js to reload the module, which was loaded by `require`, automatically when its file changes.
+
+Works on every Node.js version from v4 up to the latest (regression-tested in CI).
 
 ## Install
 
@@ -26,6 +30,7 @@ npm install auto-reload
 `test/json.js`
 ```js
 const fs = require('fs');
+const path = require('path');
 const reload = require('auto-reload');
 const data = reload('./data/json'); // reload after file changed
 
@@ -51,14 +56,10 @@ Result:
 ```js
 0 'Alan'
 0 'Alan'
-0 'Alan'
-0 'Alan'
 0.41179045320583496 'Test'
 ```
 
 ### Reload Js file
-
-**Realod function haven't support**
 
 `test/data/code.js`
 ```js
@@ -83,15 +84,73 @@ setInterval(function() {
   console.log(new Date, data);
 }, 1000);
 
-// If you update the `time` in test/data/code.js
+// If you update test/data/code.js
 // the output will change immediately
 ```
+
+## How it works
+
+`reload(path[, interval])` returns the module exports and keeps updating **that
+same object in place** whenever the file changes, so every reference you handed
+out (including nested ones) stays current:
+
+| usage | behavior |
+| --- | --- |
+| `reload(path)` | watch the file (stat polling, ~500ms), update on change |
+| `reload(path, n)` with `n <= 1000` | same as above |
+| `reload(path, n)` with `n > 1000` | check the file every `n` ms, update only when it changed |
+
+Notes:
+
+- Relative paths resolve against the directory of the file that calls `reload()`.
+- Fresh `require()` calls of the same file always return the new data too.
+- When an update fails (e.g. the file was saved half-written / has a syntax
+  error), the old data is kept and the error is logged once instead of spamming
+  on every retry; logging resumes when a different error occurs.
+- Debug output can be enabled with the `-d` CLI flag or `NODE_DEBUG=auto-reload`.
+
+## Limitations
+
+- **Function exports can not be hot-swapped.** JavaScript function objects
+  keep their code forever, so `module.exports = function ...` stays on the old
+  implementation (a warning is logged once). Wrap it in an object instead:
+
+  ```js
+  // route.js
+  module.exports = { handler: function (req, res) { res.send('hello'); } };
+
+  // app.js
+  const route = reload('./route');
+  app.get('/', (req, res) => route.handler(req, res));
+  ```
+
+  The same applies to function *properties* inside an exported object.
+- Primitive exports (`module.exports = 42`) can not update old references;
+  the old value is kept and a warning is logged once.
+- Editing a file without changing its size *and* its mtime granularity
+  (within the same second on filesystems with 1s mtime resolution) is
+  detected on the next change.
 
 ## Aims
 
 - [x] auto reload json file
 - [x] auto reload js file
-- [x] fix memory leak
+- [x] fix memory leak (no more vm context per reload)
+- [x] deep-renew nested references (and survive circular references)
+- [x] relative `require()` inside reloaded modules resolves correctly
+- [x] unit test suite without dependencies (runs on Node >= 4)
+- [x] CI matrix from Node v4 to the current release
 - [ ] provide more options (include logger etc.)
 - [ ] rewrite with promise (include improve exception catch)
-- [ ] add tests with ava
+
+## Development
+
+Run the test suite (no dependencies to install):
+
+```
+npm test
+```
+
+The files under `test/` (other than `test/run.js` and `*.test.js`) are manual
+demos — start one, edit the watched file, and watch it update. The express demo
+needs `npm i express` first.

@@ -1,0 +1,38 @@
+name: CI
+
+on:
+  push:
+    branches: [master, main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    name: Node ${{ matrix.node }}
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26]
+    steps:
+      - uses: actions/checkout@v4
+
+      # Node.js 4.x is not available through actions/setup-node's manifest
+      - name: Use Node.js ${{ matrix.node }}
+        if: matrix.node != 4
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+
+      - name: Install Node.js v4.9.1 (official tarball)
+        if: matrix.node == 4
+        run: |
+          curl -fsSL https://nodejs.org/dist/v4.9.1/node-v4.9.1-linux-x64.tar.gz -o /tmp/node4.tar.gz
+          tar -xzf /tmp/node4.tar.gz -C /tmp
+          echo "/tmp/node-v4.9.1-linux-x64/bin" >> "$GITHUB_PATH"
+
+      - name: Show versions
+        run: node --version && npm --version
+
+      - name: Run tests
+        run: npm test

@@ -1,10 +1,10 @@
 {
   "name": "auto-reload",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "To clear require cache, and auto reload module",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"If you see a data change in every 5 secs, it's okay\" && cd ./test && node ./test.js -d"
+    "test": "node test/run.js"
   },
   "repository": {
     "type": "git",
@@ -13,6 +13,7 @@
   "keywords": [
     "reload",
     "auto reload",
+    "hot reload",
     "reload require",
     "re-require"
   ],
@@ -23,10 +24,10 @@
   },
   "homepage": "https://github.com/Lellansin/node-reload",
   "dependencies": {},
+  "engines": {
+    "node": ">= 4.0.0"
+  },
   "directories": {
     "test": "test"
-  },
-  "devDependencies": {
-    "heapdump": "^0.3.9"
   }
 }
