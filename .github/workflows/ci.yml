@@ -51,7 +51,7 @@ jobs:
           node-version: 24
 
       - name: Install dependencies
-        run: npm ci --no-audit --no-fund
+        run: npm ci --no-audit --no-fund --fetch-timeout=60000 --fetch-retries=2 --registry=https://registry.npmmirror.com
 
       - name: Run tests with coverage (100% gate)
         run: npm run coverage
